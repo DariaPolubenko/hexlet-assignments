@@ -1,0 +1,10 @@
+.gradle/
+.gradle
+build/
+caches/
+.idea/
+
+.DS_Store
+../.DS_Store
+
+
