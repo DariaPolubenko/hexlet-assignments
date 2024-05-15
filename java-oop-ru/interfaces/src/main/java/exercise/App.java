@@ -11,14 +11,11 @@ public class App {
 
         var sortedList = list.stream()
                 .sorted((h1, h2) -> h1.compareTo(h2))
-                .flatMap(home -> home.toString())
+                .limit(n)
+                .map(home -> home.toString())
                 .toList();
 
-        var result = new ArrayList<String>();
-        for (var i = 0; i < n; i++) {
-            result.add(sortedList.get(i));
-        }
-        return result;
+        return sortedList;
     }
 
 }
