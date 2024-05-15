@@ -1,4 +1,3 @@
-/*
 package exercise;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,7 +6,7 @@ import java.lang.CharSequence;
 
 // BEGIN
 public class ReversedSequence implements CharSequence {
-    private String line;
+    private static String line;
 
     public ReversedSequence(String line) {
         this.line = StringUtils.reverse(line);
@@ -19,10 +18,13 @@ public class ReversedSequence implements CharSequence {
     }
 
     @Override
-    public static charAt(int) {
+    public char charAt(int index) {
+        return line.charAt(index);
+    }
 
+    @Override
+    public int length() {
+        return line.length();
     }
 }
 // END
-
- */
