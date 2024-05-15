@@ -2,17 +2,17 @@ package exercise;
 
 // BEGIN
 public class Flat implements Home {
-    private Double area;
-    private Double balconyArea;
+    private double area;
+    private double balconyArea;
     private int floor;
 
-    public Flat(Double area, Double balconyArea, int floor) {
+    public Flat(double area, double balconyArea, int floor) {
         this.area = area;
         this.balconyArea = balconyArea;
         this.floor = floor;
     }
 
-    public Double getArea() {
+    public double getArea() {
         return this.area + this.balconyArea;
     }
     @Override
@@ -20,12 +20,12 @@ public class Flat implements Home {
         var result = this.getArea() > another.getArea() ? 1
                 : this.getArea() < another.getArea() ? -1
                 : 0;
-        return 0;
+        return result;
     }
 
     @Override
     public String toString() {
-        return "Квартира площадью " + this.getArea() + " метров на " + this.floor + " этаже.";
+        return "Квартира площадью " + this.getArea() + " метров на " + this.floor + " этаже";
     }
 }
 // END
