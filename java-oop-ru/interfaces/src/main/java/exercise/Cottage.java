@@ -2,14 +2,14 @@ package exercise;
 
 // BEGIN
 public class Cottage implements Home {
-    private Double area;
+    private double area;
     private int floorCount;
 
-    public Cottage(Double area, int floorCount) {
+    public Cottage(double area, int floorCount) {
         this.area = area;
         this.floorCount = floorCount;
     }
-    public Double getArea() {
+    public double getArea() {
         return this.area;
     }
     @Override
@@ -17,12 +17,12 @@ public class Cottage implements Home {
         var result = this.getArea() > another.getArea() ? 1
                 : this.getArea() < another.getArea() ? -1
                 : 0;
-        return 0;
+        return result;
     }
 
     @Override
     public String toString() {
-        return this.floorCount + " этажный коттедж площадью " + this.getArea() + " метров.";
+        return this.floorCount + " этажный коттедж площадью " + this.getArea() + " метров";
     }
 }
 // END
