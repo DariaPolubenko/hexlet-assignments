@@ -11,6 +11,7 @@ public class Flat implements Home {
         this.balconyArea = balconyArea;
         this.floor = floor;
     }
+
     public Double getArea() {
         return this.area + this.balconyArea;
     }
