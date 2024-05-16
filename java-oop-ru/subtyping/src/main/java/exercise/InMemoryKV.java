@@ -4,11 +4,11 @@ import java.util.Map;
 import java.util.HashMap;
 
 // BEGIN
-public class InMemoryKV KeyValueStorage implements KeyValueStorage {
+public class InMemoryKV implements KeyValueStorage {
     private Map<String, String> storage;
 
-    public KeyValueStorage(Map<String, String> initialValue) {
-        this.storage = initialValue;
+    public InMemoryKV(Map<String, String> initialValue) {
+        this.storage = new HashMap<>(initialValue);
     }
 
     public void set(String key, String value) {
@@ -20,11 +20,11 @@ public class InMemoryKV KeyValueStorage implements KeyValueStorage {
     }
 
     public String get(String key, String defaultValue) {
-            return storage.getOrDefault(key, defaultValue);
+        return storage.getOrDefault(key, defaultValue);
     }
 
     public Map<String, String> toMap() {
-        return storage;
+        return new HashMap<>(storage);
     }
 }
 // END
