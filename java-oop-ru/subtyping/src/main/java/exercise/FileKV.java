@@ -5,37 +5,37 @@ import java.util.Map;
 
 // BEGIN
 class FileKV implements KeyValueStorage {
-    private Map<String, String> storage;
     private String filePath;
 
     public FileKV(String filePath, Map<String, String> initialValue) {
         this.filePath = filePath;
-        this.storage = new HashMap<>(initialValue);
-        Utils.writeFile(filePath, Utils.serialize(storage));
+        Utils.writeFile(filePath, Utils.serialize(initialValue));
     }
 
     public void set(String key, String value) {
-        storage.put(key, value);
-        Utils.writeFile(filePath, Utils.serialize(storage));
+        var content = Utils.readFile(filePath);
+        var data = Utils.unserialize(content);
+        data.put(key, value);
+        Utils.writeFile(filePath, Utils.serialize(data));
     }
 
     public void unset(String key) {
         var content = Utils.readFile(filePath);
-        var contentMap = Utils.unserialize(content);
-        contentMap.remove(key);
-        Utils.writeFile(filePath, Utils.serialize(contentMap));
+        var data = Utils.unserialize(content);
+        data.remove(key);
+        Utils.writeFile(filePath, Utils.serialize(data));
     }
 
     public String get(String key, String defaultValue) {
         var content = Utils.readFile(filePath);
-        var contentMap = Utils.unserialize(content);
-        return contentMap.getOrDefault(key, defaultValue);
+        var data = Utils.unserialize(content);
+        return data.getOrDefault(key, defaultValue);
     }
 
     public Map<String, String> toMap() {
         var content = Utils.readFile(filePath);
-        var contentMap = Utils.unserialize(content);
-        return new HashMap<>(contentMap);
+        var data = Utils.unserialize(content);
+        return data;
     }
 }
 // END
