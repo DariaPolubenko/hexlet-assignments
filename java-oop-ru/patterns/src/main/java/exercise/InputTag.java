@@ -1,11 +1,11 @@
 package exercise;
 
 // BEGIN
-public class TagInterface implements TagInterface {
+public class InputTag implements TagInterface {
     private String type;
     private String value;
 
-    public TagInterface(String type, String value) {
+    public InputTag(String type, String value) {
         this.type = type;
         this.value = value;
     }
