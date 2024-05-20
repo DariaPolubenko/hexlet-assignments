@@ -11,7 +11,7 @@ public class InputTag implements TagInterface {
     }
 
     public String render() {
-        return "<input type=\"" + this.type + "\" value=\"" + this.value + "\">";
+        return "<input type=\"" + type + "\" value=\"" + value + "\">";
     }
 }
 // END
