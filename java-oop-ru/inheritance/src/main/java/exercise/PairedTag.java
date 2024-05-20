@@ -6,33 +6,26 @@ import java.util.stream.Collectors;
 
 // BEGIN
 public class PairedTag extends Tag {
-    private String tagBody;
+    private String body;
     private List<Tag> child;
 
-    public PairedTag(String name, Map<String, String> tag, String tagBody, List<Tag> child) {
-        super(name, tag);
-        this.tagBody = tagBody;
+    public PairedTag(String name, Map<String, String> attributes, String tagBody, List<Tag> child) {
+        super(name, attributes);
+        this.body = tagBody;
         this.child = child;
     }
 
     @Override
     public String toString() {
-        if (child.isEmpty()) {
-            return "<" + getName() + getStringTag() + ">" + tagBody + "</" + getName() + ">";
-        } else {
-            return "<" + getName() + getStringTag() + ">" + tagBody + toStringChildList() + "</" + getName() + ">";
-        }
-        //return "";
+            return "<" + getName() + stringifyAttributes() + ">" + body + stringifyChild() + "</" + getName() + ">";
     }
 
-    public String toStringChildList() {
-        var result = new StringBuilder();
-        for (var children : child) {
-            result.append(children.toString());
-        }
-        result.toString();
-        var result1 = result.substring(0, result.length() - 2);
-        return tagBody + result1 + "\">";
+    public String stringifyChild() {
+        var result = child.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(""));
+
+        return result;
     }
 }
 // END
