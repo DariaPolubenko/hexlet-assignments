@@ -6,24 +6,13 @@ import java.util.Map;
 // BEGIN
 public class SingleTag extends Tag {
 
-    public SingleTag(String name, Map<String, String> tag) {
-        super(name, tag);
+    public SingleTag(String name, Map<String, String> attributes) {
+        super(name, attributes);
     }
 
     @Override
     public String toString() {
-        if (getStringTag().isEmpty()) {
-            return "<" + this.getName() + ">";
-        }
-        return "<" + this.getName() + getStringTag() + ">";
+        return "<" + this.getName() + stringifyAttributes() + ">";
     }
-
-    public String toStringChild() {
-        if (getStringTag().isEmpty()) {
-            return "";
-        }
-        return "<" + getName() + getStringTag() + ">";
-    }
-
 }
 // END
