@@ -2,16 +2,16 @@ package exercise;
 
 // BEGIN
 public class LabelTag implements TagInterface {
-    private String tag;
-    private TagInterface label;
+    private String text;
+    private TagInterface child;
 
-    public LabelTag(String tag, TagInterface label) {
-        this.tag = tag;
-        this.label = label;
+    public LabelTag(String tag, TagInterface child) {
+        this.text = tag;
+        this.child = child;
     }
 
     public String render() {
-        return "<label>" + this.tag + this.label.render() + "</label>";
+        return "<label>" + text + child.render() + "</label>";
     }
 }
 // END
