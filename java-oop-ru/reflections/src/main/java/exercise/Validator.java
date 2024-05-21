@@ -41,9 +41,7 @@ public class Validator {
                     list.add("can not be null");
                     var key = field.getName();
                     result.put(key, list);
-                }
-
-                if (field.isAnnotationPresent(MinLength.class)) {
+                } else if (field.isAnnotationPresent(MinLength.class)) {
                     var getMinLength = field.getAnnotation(MinLength.class);
                     var minLength = getMinLength.minLength();
                     field.setAccessible(true);
