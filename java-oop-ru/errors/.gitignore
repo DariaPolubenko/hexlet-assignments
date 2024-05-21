@@ -2,3 +2,6 @@
 build/
 caches/
 .idea/
+
+/gradle/
+
