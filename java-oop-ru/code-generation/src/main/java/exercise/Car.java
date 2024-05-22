@@ -7,6 +7,7 @@ import lombok.Value;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 // BEGIN
+@Value
 @Getter
 @AllArgsConstructor
 // END
@@ -18,13 +19,11 @@ class Car {
     User owner;
 
     // BEGIN
-    @SneakyThrows
-    public String serialize() {
+    public String serialize() throws Exception {
         return new ObjectMapper().writeValueAsString(this);
     }
 
-    @SneakyThrows
-    public static Car unserialize(String car) {
+    public static Car unserialize(String car) throws Exception {
         return new ObjectMapper().readValue(car, Car.class);
     }
     // END
