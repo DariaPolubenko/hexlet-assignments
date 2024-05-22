@@ -8,7 +8,7 @@ import java.util.Map;
 
 // BEGIN
 public class Validator {
-    public static List<String> validate(Address address) throws RuntimeException {
+    public static List<String> validate(Address address) {
         var notValidFields = new ArrayList<String>();
         Field[] fields = address.getClass().getDeclaredFields();
 
@@ -23,11 +23,13 @@ public class Validator {
                     notValidFields.add(result);
                 }
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return notValidFields;
     }
 
-    public static Map<String, List<String>> advancedValidate(Address address) throws RuntimeException  {
+    public static Map<String, List<String>> advancedValidate(Address address)  {
         var notValidFields = validate(address);
         var result = new HashMap<String, List<String>>();
         Field[] fields = address.getClass().getDeclaredFields();
@@ -54,7 +56,7 @@ public class Validator {
                 }
             }
         } catch (Exception e) {
-            System.out.println("error");
+            throw new RuntimeException(e);
         }
         return result;
     }
