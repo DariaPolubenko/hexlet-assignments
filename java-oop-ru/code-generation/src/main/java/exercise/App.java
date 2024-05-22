@@ -11,16 +11,15 @@ import static java.nio.file.Files.readString;
 
 // BEGIN
 public class App {
-    @SneakyThrows
-    public static void save(Path path, Car car) {
+    public static void save(Path path, Car car) throws Exception {
         var stringJson = car.serialize();
         Files.writeString(path, stringJson);
     }
 
-    @SneakyThrows
-    public static Car extract(Path path) {
+
+    public static Car extract(Path path) throws Exception {
         var content = readString(path);
-        return unserialize(content);
+        return Car.unserialize(content);
     }
 }
 // END
