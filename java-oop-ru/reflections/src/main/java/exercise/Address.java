@@ -8,6 +8,7 @@ class Address {
     private String country;
 
     // BEGIN
+    @MinLength()
     @NotNull
     // END
     private String city;
