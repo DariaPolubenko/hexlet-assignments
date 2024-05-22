@@ -47,7 +47,8 @@ public class Validator {
                     String value = field.get(address) + "";
 
                     if (value.length() < minLength) {
-                        var list = new ArrayList<String>(List.of("length less than " + minLength);
+                        var list = new ArrayList<String>();
+                        list.add("length less than " + minLength);
                         result.put(nameField, list);
                     }
                 }
