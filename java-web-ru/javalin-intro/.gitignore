@@ -2,6 +2,7 @@
 # Outside, this directory is called "exercises".
 caches/
 .idea/
+.idea
 
 .DS_Store
 ../.DS_Store
