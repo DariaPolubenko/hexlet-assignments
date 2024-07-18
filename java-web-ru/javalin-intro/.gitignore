@@ -1,0 +1,28 @@
+# WARNING: Paths must not include the name of the "lessons" directory.
+# Outside, this directory is called "exercises".
+caches/
+.idea/
+
+.DS_Store
+../.DS_Store
+
+# Ignore Gradle project-specific cache directory
+.gradle
+.gradle/
+classes-and-objects/gradle
+
+# Ignore Gradle build output directory
+build
+build/
+
+**/*/presentation*.html
+.vagrant
+node_modules/
+vendor/
+dist
+.vscode/
+.project
+.settings
+jte-classes
+.classpath
+bin
