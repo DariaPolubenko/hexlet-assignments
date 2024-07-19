@@ -1,6 +1,8 @@
 package exercise;
 
 import io.javalin.Javalin;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +17,21 @@ public final class App {
         });
 
         // BEGIN
-        
+        app.get("/users", ctx -> {
+            var page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
+            var per = ctx.queryParamAsClass("per", Integer.class).getOrDefault(5);
+
+            var users = Data.getUsers();
+
+            var count = (page * per) - per;
+            List<Map<String, String>> result = new ArrayList<>();
+
+            for (var i = count; i < page * per; i++) {
+                result.add(users.get(i));
+            }
+
+            ctx.json(result);
+        });
         // END
 
         return app;
