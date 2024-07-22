@@ -21,21 +21,13 @@ public final class App {
             var page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
             var per = ctx.queryParamAsClass("per", Integer.class).getOrDefault(5);
 
-            var users = Data.getUsers();
-
-            var count = (page * per) - per;
-            List<Map<String, String>> result = new ArrayList<>();
-
-            for (var i = count; i < page * per; i++) {
-                result.add(users.get(i));
-            }
+            var offset = (page * per) - per;
+            List<Map<String, String>> result = USERS.subList(offset, offset + per);
 
             ctx.json(result);
         });
         // END
-
         return app;
-
     }
 
     public static void main(String[] args) {
