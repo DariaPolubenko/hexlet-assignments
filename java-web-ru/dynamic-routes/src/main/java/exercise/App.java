@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 // BEGIN
-import io.javalin.http.NotFoundResponse;git
+import io.javalin.http.NotFoundResponse;
 // END
 
 public final class App {
