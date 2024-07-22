@@ -1,13 +1,11 @@
 package exercise;
 
 import io.javalin.Javalin;
-import io.javalin.http.NotFoundResponse;
-
 import java.util.List;
 import java.util.Map;
 
 // BEGIN
-
+import io.javalin.http.NotFoundResponse;
 // END
 
 public final class App {
@@ -26,7 +24,8 @@ public final class App {
 
             var result = COMPANIES.stream()
                     .filter(current -> current.get("id").equals(id))
-                    .findFirst().orElseThrow(() -> new NotFoundResponse("Company not found"));
+                    .findFirst()
+                    .orElseThrow(() -> new NotFoundResponse("Company not found"));
 
             ctx.json(result);
         });
