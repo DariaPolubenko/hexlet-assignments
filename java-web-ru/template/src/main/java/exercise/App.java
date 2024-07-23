@@ -1,17 +1,17 @@
 package exercise;
 
-import io.javalin.Javalin;
-import java.util.List;
-import io.javalin.http.NotFoundResponse;
+import exercise.dto.users.UsersPage;
 import exercise.model.User;
 import exercise.dto.users.UserPage;
-import exercise.dto.users.UsersPage;
+
+import io.javalin.Javalin;
+import io.javalin.http.NotFoundResponse;
 import static io.javalin.rendering.template.TemplateUtil.model;
 import io.javalin.rendering.template.JavalinJte;
+import java.util.List;
+
 
 public final class App {
-
-    // Каждый пользователь представлен объектом класса User
     private static final List<User> USERS = Data.getUsers();
 
     public static Javalin getApp() {
@@ -22,12 +22,29 @@ public final class App {
         });
 
         // BEGIN
-        
-        // END
+        app.get("/users", ctx -> {
+            var users = new UsersPage(USERS);
+            ctx.render("users/index.jte", model("users", users));
+        });
+
+
+        app.get("/users/{id}", ctx -> {
+            int id = ctx.pathParamAsClass("id", Integer.class).get();
+
+            var user = USERS.stream()
+                    .filter(current -> current.getId() == id)
+                    .findFirst()
+                    .orElseThrow(() -> new NotFoundResponse("User not found"));
+
+            var userPage = new UserPage(user);
+            ctx.render("users/show.jte", model("user", userPage));
+        });
+
 
         app.get("/", ctx -> {
-            ctx.render("index.jte");
+            ctx.result("open something like (you can change id): /users/5");
         });
+        // END
 
         return app;
     }
