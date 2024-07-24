@@ -1,6 +1,8 @@
 package exercise;
 
 import io.javalin.Javalin;
+
+import java.util.ArrayList;
 import java.util.List;
 import exercise.model.User;
 import exercise.dto.users.UsersPage;
@@ -22,7 +24,28 @@ public final class App {
         });
 
         // BEGIN
-        
+        app.get("/users", ctx -> {
+            var term = ctx.queryParam("term");
+
+            if (term != null) {
+                List<User> filterUsers = new ArrayList<>();
+
+                for (var user : USERS) {
+                    var name = user.getFirstName().toLowerCase();
+                    var normalizedTerm = term.toLowerCase();
+
+                    if (name.contains(normalizedTerm)) {
+                        filterUsers.add(user);
+                    }
+                }
+                var page = new UsersPage(filterUsers, term);
+                ctx.render("users/index.jte", model("page", page));
+
+            } else {
+                var page = new UsersPage(USERS, null);
+                ctx.render("users/index.jte", model("page", page));
+            }
+        });
         // END
 
         app.get("/", ctx -> {
