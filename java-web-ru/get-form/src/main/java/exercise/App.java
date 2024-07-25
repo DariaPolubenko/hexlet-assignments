@@ -27,24 +27,16 @@ public final class App {
         app.get("/users", ctx -> {
             var term = ctx.queryParam("term");
 
+            List<User> users;
             if (term != null) {
-                List<User> filterUsers = new ArrayList<>();
-
-                for (var user : USERS) {
-                    var name = user.getFirstName().toLowerCase();
-                    var normalizedTerm = term.toLowerCase();
-
-                    if (name.contains(normalizedTerm)) {
-                        filterUsers.add(user);
-                    }
-                }
-                var page = new UsersPage(filterUsers, term);
-                ctx.render("users/index.jte", model("page", page));
-
+                users = USERS.stream()
+                        .filter(user -> StringUtils.startsWithIgnoreCase(user.getFirstName(), term))
+                        .toList();
             } else {
-                var page = new UsersPage(USERS, null);
-                ctx.render("users/index.jte", model("page", page));
+            users = USERS;
             }
+        var page = new UsersPage(users, term);
+        ctx.render("users/index.jte", model("page", page));
         });
         // END
 
