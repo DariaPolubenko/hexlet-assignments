@@ -9,7 +9,6 @@ import io.javalin.rendering.template.JavalinJte;
 import exercise.model.User;
 import exercise.dto.users.UsersPage;
 import exercise.repository.UserRepository;
-import org.apache.commons.lang3.StringUtils;
 import exercise.util.Security;
 
 public final class App {
@@ -36,7 +35,7 @@ public final class App {
             ctx.render("users/build.jte");
         });
 
-        app.post("/users", ctx -> {
+        app.post("/users/build", ctx -> {
             var firstName = capitalize(ctx.formParam("firstName"));
             var lastName = capitalize(ctx.formParam("lastName"));
             var email = ctx.formParam("email").trim().toLowerCase();
@@ -44,7 +43,7 @@ public final class App {
 
             var user = new User(firstName, lastName, email, password);
             UserRepository.save(user);
-            ctx.redirect();
+            ctx.redirect("/users");
         });
         // END
 
