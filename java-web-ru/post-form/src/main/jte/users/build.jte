@@ -11,7 +11,7 @@
     <h3 style="margin-bottom: 30px"><a href="/">Главная</a></h3>
 </head>
 <body>
-<form action="/users/build" method="post">
+<form action="/users" method="post">
     <div class="mb-3">
         <label>
             <input type="text" class="form-control" placeholder="Имя" name="firstName"/>

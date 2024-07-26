@@ -35,7 +35,7 @@ public final class App {
             ctx.render("users/build.jte");
         });
 
-        app.post("/users/build", ctx -> {
+        app.post("/users", ctx -> {
             var firstName = capitalize(ctx.formParam("firstName"));
             var lastName = capitalize(ctx.formParam("lastName"));
             var email = ctx.formParam("email").trim().toLowerCase();
