@@ -1,7 +1,6 @@
 @import gg.jte.Content
 @param Content content
 
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -11,12 +10,12 @@
             integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
             crossorigin="anonymous">
     <title>Hello Hexlet!</title>
-  </head>
-  <body>
-    <div class="mx-auto p-4 py-md-5">
+    </head>
+    <body>
+        <div class="mx-auto p-4 py-md-5">
         <main>
           ${content}
         </main>
-    </div>
-  </body>
+        </div>
+    </body>
 </html>
