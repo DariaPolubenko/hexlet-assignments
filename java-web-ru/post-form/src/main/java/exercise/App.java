@@ -3,6 +3,8 @@ package exercise;
 import io.javalin.Javalin;
 import java.util.List;
 import static io.javalin.rendering.template.TemplateUtil.model;
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
 import io.javalin.rendering.template.JavalinJte;
 import exercise.model.User;
 import exercise.dto.users.UsersPage;
@@ -30,7 +32,20 @@ public final class App {
         });
 
         // BEGIN
-        
+        app.get("/users/build", ctx -> {
+            ctx.render("users/build.jte");
+        });
+
+        app.post("/users", ctx -> {
+            var firstName = capitalize(ctx.formParam("firstName"));
+            var lastName = capitalize(ctx.formParam("lastName"));
+            var email = ctx.formParam("email").trim().toLowerCase();
+            var password = Security.encrypt(ctx.formParam("password"));
+
+            var user = new User(firstName, lastName, email, password);
+            UserRepository.save(user);
+            ctx.redirect();
+        });
         // END
 
         return app;
