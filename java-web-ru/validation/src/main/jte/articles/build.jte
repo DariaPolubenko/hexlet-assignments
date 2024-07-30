@@ -12,21 +12,19 @@ content = @`
         @endfor
     </ul>
 @endif
-
 <form action="/articles" method="post">
     <div>
         <label>
-            <input type="text" name="title" value="${page.getTitle()}" />
+            <input type="text" required name="title" value="${page.getTitle()}" />
         </label>
     </div>
-
     <div>
         <label>
-            <textarea cols="20" rows="10" name="content" value="${page.getContent()}"></textarea>
+            <input type="text" required name="content" value="${page.getContent()}" />
+           <!-- <textarea name="content" cols="20" rows="10"></textarea> -->
         </label>
     </div>
-
-    <button>Добавить</button>
+    <input type="submit" value="Опубликовать"/>
 </form>
 `
 )
