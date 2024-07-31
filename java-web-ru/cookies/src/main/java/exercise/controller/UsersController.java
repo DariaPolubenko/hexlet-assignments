@@ -18,6 +18,35 @@ public class UsersController {
     }
 
     // BEGIN
-    
+    public static void create(Context ctx) {
+        var firstName = ctx.formParam("firstName");
+        var lastName = ctx.formParam("lastName");
+        var email = ctx.formParam("email");
+        var password = ctx.formParam("password");
+        var token = Security.generateToken();
+
+        var user = new User(firstName, lastName, email, password, token);
+        UserRepository.save(user);
+        ctx.cookie("token", String.valueOf(user.getToken()));
+
+        var id = user.getId();
+        ctx.redirect(NamedRoutes.userPath(id));
+    }
+
+    public static void show(Context ctx) {
+        var id = ctx.pathParamAsClass("id", Long.class).get();
+        var token = ctx.cookie("token");
+
+        var user = UserRepository.find(id)
+                .orElseThrow(() -> new NotFoundResponse("User not found"));
+        var page = new UserPage(user);
+
+        if (token.equals(user.getToken())) {
+            ctx.render("users/show.jte", model("page", page));
+        } else {
+            ctx.redirect(NamedRoutes.buildUserPath());
+            ctx.cookie("token", String.valueOf(user.getToken()));
+        }
+    }
     // END
 }
