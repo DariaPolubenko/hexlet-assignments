@@ -20,9 +20,10 @@ public class PostsController {
     }
 
     public static void index(Context ctx) {
-        var posts = PostRepository.getEntities();
+        int pageNumber = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
+        var posts = PostRepository.findAll(pageNumber, 5);
         var page = new PostsPage(posts);
-        ctx.render("posts/index.jte", model("page", page));
+        ctx.render("posts/index.jte", model("page", page, "pageNumber", pageNumber));
     }
 
     // END
