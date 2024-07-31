@@ -8,6 +8,10 @@ import java.util.Optional;
 public class PostRepository {
     private static List<Post> entities = Generator.getPosts();
 
+    public static int getSize() {
+        return entities.size();
+    }
+
     public static void save(Post post) {
         post.setId((long) entities.size() + 1);
         entities.add(post);
