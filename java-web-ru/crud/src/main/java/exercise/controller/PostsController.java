@@ -21,9 +21,10 @@ public class PostsController {
 
     public static void index(Context ctx) {
         int pageNumber = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
-        var posts = PostRepository.findAll(pageNumber, 5);
-        var page = new PostsPage(posts);
-        ctx.render("posts/index.jte", model("page", page, "pageNumber", pageNumber));
+        var pageNumbers = PostRepository.getSize() / 5;
+        var postLists = PostRepository.findAll(pageNumber, 5);
+        var page = new PostsPage(postLists);
+        ctx.render("posts/index.jte", model("page", page, "pageNumber", pageNumber, "size", pageNumbers));
     }
 
     // END
