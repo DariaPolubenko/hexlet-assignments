@@ -16,7 +16,7 @@ public class SessionsController {
 
     // BEGIN
     public static void index(Context ctx) {
-        var currentUser = ctx.sessionAttribute("name");
+        var currentUser = ctx.sessionAttribute("currentUser");
         var page = new MainPage(currentUser);
         ctx.render("index.jte", model("page", page));
     }
@@ -29,25 +29,20 @@ public class SessionsController {
     public static void create(Context ctx) {
         var name = ctx.formParam("name");
         var password = Security.encrypt(ctx.formParam("password"));
+        var user = UsersRepository.findByName(name).orElse(null);
 
-        try {
-            var user = UsersRepository.findByName(name)
-                    .orElseThrow(() -> new NotFoundResponse("Wrong username or password"));
-
-            if (!password.equals(user.getPassword())) {
-                throw new NotFoundResponse("Wrong username or password");
-            }
-            ctx.sessionAttribute("name", name);
+        if (user != null && password.equals(user.getPassword())) {
+            ctx.sessionAttribute("currentUser", name);
             ctx.redirect(NamedRoutes.rootPath());
-
-        } catch(NotFoundResponse e) {
-            var page = new LoginPage(name, e.getMessage());
+        } else {
+            var error = "Wrong username or password";
+            var page = new LoginPage(name, error);
             ctx.render("build.jte", model("page", page));
         }
     }
 
     public static void delete(Context ctx) {
-        ctx.sessionAttribute("name", null);
+        ctx.sessionAttribute("currentUser", null);
         ctx.redirect(NamedRoutes.rootPath());
     }
     // END
