@@ -19,18 +19,18 @@ public class UsersController {
 
     // BEGIN
     public static void create(Context ctx) {
-        var firstName = ctx.formParam("firstName");
-        var lastName = ctx.formParam("lastName");
-        var email = ctx.formParam("email");
+        var firstName = StringUtils.capitalize(ctx.formParam("firstName"));
+        var lastName = StringUtils.capitalize(ctx.formParam("lastName"));
+        var email = ctx.formParam("email").trim().toLowerCase();;
         var password = ctx.formParam("password");
+        var encryptedPassword = Security.encrypt(password);
         var token = Security.generateToken();
 
-        var user = new User(firstName, lastName, email, password, token);
+        var user = new User(firstName, lastName, email, encryptedPassword, token);
         UserRepository.save(user);
-        ctx.cookie("token", String.valueOf(user.getToken()));
 
-        var id = user.getId();
-        ctx.redirect(NamedRoutes.userPath(id));
+        ctx.cookie("token", String.valueOf(user.getToken()));
+        ctx.redirect(NamedRoutes.userPath(user.getId()));
     }
 
     public static void show(Context ctx) {
@@ -39,14 +39,13 @@ public class UsersController {
 
         var user = UserRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("User not found"));
-        var page = new UserPage(user);
 
         if (token.equals(user.getToken())) {
+            var page = new UserPage(user);
             ctx.render("users/show.jte", model("page", page));
-        } else {
-            ctx.redirect(NamedRoutes.buildUserPath());
-            ctx.cookie("token", String.valueOf(user.getToken()));
+            return;
         }
+        ctx.redirect(NamedRoutes.buildUserPath());
     }
     // END
 }
