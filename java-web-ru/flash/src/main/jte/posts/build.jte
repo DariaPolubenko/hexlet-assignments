@@ -2,10 +2,9 @@
 @param BuildPostPage page
 
 @template.layout.page(
-
     content = @`
         @if(page.getErrors() != null)
-            <div class="mb-3">
+            <div class="mb-3 alert alert-danger" role="alert">
                 <ul>
                     @for(var validator : page.getErrors().values())
                         @for(var error : validator)
