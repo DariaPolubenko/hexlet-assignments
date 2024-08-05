@@ -4,15 +4,13 @@
 @template.layout.page(
     content = @`
         @if(page.getErrors() != null)
-            <div class="mb-3 alert alert-danger" role="alert">
-                <ul>
-                    @for(var validator : page.getErrors().values())
-                        @for(var error : validator)
-                            <li>${error.getMessage()}</li>
-                        @endfor
+            <ul>
+                @for(var validator : page.getErrors().values())
+                    @for(var error : validator)
+                        <li>${error.getMessage()}</li>
                     @endfor
-                </ul>
-            </div>
+                @endfor
+            </ul>
         @endif
 
         <div class="mx-auto p-4 py-md-5">
