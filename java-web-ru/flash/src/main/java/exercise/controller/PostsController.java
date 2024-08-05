@@ -20,9 +20,9 @@ public class PostsController {
 
     // BEGIN
     public static void index(Context ctx) {
-        String flash = ctx.consumeSessionAttribute("flash");
         var page = new PostsPage(PostRepository.getEntities());
-        page.setFlash(flash);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
         ctx.render("posts/index.jte", model("page", page));
     }
 
@@ -40,15 +40,15 @@ public class PostsController {
             var post = new Post(name, body);
             PostRepository.save(post);
             ctx.sessionAttribute("flash", "Пост был успешно создан!");
+            ctx.sessionAttribute("flash-type", "success");
             ctx.redirect(NamedRoutes.postsPath());
 
         } catch (ValidationException e) {
             var name = ctx.formParam("name");
             var body = ctx.formParam("body");
 
-            ctx.sessionAttribute("flash2", "Пост не был добавлен!");
             var page = new BuildPostPage(name, body, e.getErrors());
-            ctx.render("posts/build.jte", model("page", page));
+            ctx.render("posts/build.jte", model("page", page)).status(422);
         }
     }
     // END
