@@ -55,7 +55,7 @@ public class Application {
         return post;
     }
 
-    @PutMapping("/pages/{id}")
+    @PutMapping("/posts/{id}")
     public Post update(@PathVariable String id, @RequestBody Post data) {
         var maybePage = posts.stream()
                 .filter(p -> p.getId().equals(id))
@@ -69,7 +69,7 @@ public class Application {
         return data;
     }
 
-    @DeleteMapping("/pages/{id}")
+    @DeleteMapping("/posts/{id}")
     public void destroy(@PathVariable String id) {
         posts.removeIf(p -> p.getId().equals(id));
     }
