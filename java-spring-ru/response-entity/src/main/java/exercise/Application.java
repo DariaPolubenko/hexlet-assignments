@@ -52,24 +52,23 @@ public class Application {
     @PostMapping("/posts")
     public ResponseEntity<Post> create(@RequestBody Post post) {
         posts.add(post);
-
-        return ResponseEntity.status(201).body(post);
+        URI location = URI.create("/posts");
+        return ResponseEntity.created(location).body(post);
     }
 
     @PutMapping("/posts/{id}")
     public ResponseEntity<Post> update(@PathVariable String id, @RequestBody Post data) {
         var maybePost = posts.stream().filter(p ->p.getId().equals(id)).findFirst();
+        var status = HttpStatus.NO_CONTENT;
 
         if (maybePost.isPresent()) {
             var post = maybePost.get();
             post.setId(data.getId());
             post.setTitle(data.getTitle());
             post.setBody(data.getBody());
-
-            return ResponseEntity.ok().body(data);
+            status = HttpStatus.OK;
         }
-
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(status).body(data);
     }
     // END
 
