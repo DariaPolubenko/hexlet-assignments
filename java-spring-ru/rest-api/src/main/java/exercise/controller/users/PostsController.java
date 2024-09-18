@@ -20,23 +20,17 @@ public class PostsController {
     public List<Post> posts = Data.getPosts();
 
     @GetMapping("/users/{id}/posts")
-    public List<Post> index(@PathVariable String id) {
+    public List<Post> index(@PathVariable Integer id) {
          return posts.stream()
-                 .filter(p -> p.getUserId() == Integer.parseInt(id))
-                 .toList();
+                 .filter(p -> p.getUserId() == id).toList();
     }
 
     @PostMapping("/users/{id}/posts")
     @ResponseStatus(HttpStatus.CREATED)
-    public Post create(@PathVariable String id, @RequestBody Post data) {
-        var newPost = new Post();
-        newPost.setUserId(Integer.parseInt(id));
-        newPost.setSlug(data.getSlug());
-        newPost.setTitle(data.getTitle());
-        newPost.setBody(data.getBody());
-
-        posts.add(newPost);
-        return newPost;
+    public Post create(@PathVariable Integer id, @RequestBody Post post) {
+        post.setUserId(id);
+        posts.add(post);
+        return post;
     }
 }
 // END
