@@ -9,11 +9,7 @@ import exercise.daytime.Daytime;
 import exercise.daytime.Day;
 import exercise.daytime.Night;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-
-// BEGIN
-
-// END
+import org.springframework.web.context.annotation.RequestScope;
 
 @SpringBootApplication
 public class Application {
@@ -24,7 +20,7 @@ public class Application {
 
     // BEGIN
     @Bean
-    @Scope("prototype")
+    @RequestScope
     public Daytime getTime() {
         var hour = LocalDateTime.now().getHour();
         if (hour >= 6 && hour <= 22) {
