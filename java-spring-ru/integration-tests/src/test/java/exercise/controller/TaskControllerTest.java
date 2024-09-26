@@ -69,19 +69,33 @@ class ApplicationTest {
         var task = getTask();
         taskRepository.save(task);
 
-        mockMvc.perform(get("/tasks/" + task.getId()))
-                .andExpect(status().isOk());
+        var result = mockMvc.perform(get("/tasks/" + task.getId()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body).and(
+                v -> v.node("title").isEqualTo(task.getTitle()),
+                v -> v.node("description").isEqualTo(task.getDescription())
+        );
     }
 
     @Test
     public void testCreate() throws Exception {
-        var task = getTask();
+        var data = getTask();
         var request = post("/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(task));
+                .content(om.writeValueAsString(data));
 
-        mockMvc.perform(request)
+       mockMvc.perform(request)
                 .andExpect(status().isCreated());
+
+        var task = taskRepository.findByTitle(data.getTitle()).get();
+
+        assertThat(task).isNotNull();
+        assertThat(task.getTitle()).isEqualTo(data.getTitle());
+        assertThat(task.getDescription()).isEqualTo(data.getDescription());
     }
 
     @Test
@@ -101,8 +115,24 @@ class ApplicationTest {
                 .andExpect(status().isOk());
 
         var updateTask = taskRepository.findById(task.getId()).get();
+
         assertThat(updateTask.getTitle()).isEqualTo("test_title");
         assertThat(updateTask.getDescription()).isEqualTo("description");
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        var task = getTask();
+        taskRepository.save(task);
+
+        var request = delete("/tasks/" + task.getId());
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+
+        var findTask = taskRepository.findById(task.getId()).orElse(null);
+
+        assertThat(findTask).isNull();
     }
 
     public Task getTask() {
