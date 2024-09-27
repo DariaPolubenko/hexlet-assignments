@@ -16,21 +16,22 @@ import exercise.dto.CommentDTO;
 
 // BEGIN
 @RestController
+@RequestMapping("/posts")
 public class PostsController {
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
-    @GetMapping("/posts")
+    @GetMapping
     public List<PostDTO> index() {
         var posts = postRepository.findAll();
         var result = posts.stream().map(this::toPostDTO).toList();
         return result;
     }
 
-    @GetMapping("/posts/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PostDTO show(@PathVariable Long id) {
         var post = postRepository.findById(id)
