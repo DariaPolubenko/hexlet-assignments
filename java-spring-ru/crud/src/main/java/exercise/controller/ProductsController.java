@@ -6,7 +6,6 @@ import exercise.dto.ProductCreateDTO;
 import exercise.dto.ProductDTO;
 import exercise.dto.ProductUpdateDTO;
 import exercise.exception.BadRequest;
-import exercise.mapper.CategoryMapper;
 import exercise.mapper.ProductMapper;
 import exercise.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +73,9 @@ public class ProductsController {
                 .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + "not found"));
 
         var category = categoryRepository.findById(data.getCategoryId().get())
-                .orElseThrow(() -> new ResourceNotFoundException("Category with id " + data.getCategoryId() + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category with id "
+                        + data.getCategoryId()
+                        + "not found"));
 
         productMapper.update(data, product);
         product.setCategory(category);
