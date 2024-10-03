@@ -46,7 +46,6 @@ public class ProductsController {
                 .toList();
     }
 
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDTO show(@PathVariable Long id) {

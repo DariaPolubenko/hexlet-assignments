@@ -7,6 +7,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.3"
     id("com.github.ben-manes.versions") version "0.49.0"
     id("io.freefair.lombok") version "8.6"
+    checkstyle
 }
 
 group = "exercise"
