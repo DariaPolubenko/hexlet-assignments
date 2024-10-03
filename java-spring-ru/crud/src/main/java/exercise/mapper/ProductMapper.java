@@ -1,7 +1,6 @@
 package exercise.mapper;
 
 import exercise.dto.*;
-import exercise.model.Category;
 import exercise.model.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
