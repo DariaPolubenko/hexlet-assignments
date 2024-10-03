@@ -1,6 +1,9 @@
 package exercise.mapper;
 
-import exercise.dto.*;
+
+import exercise.dto.ProductCreateDTO;
+import exercise.dto.ProductDTO;
+import exercise.dto.ProductUpdateDTO;
 import exercise.model.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
