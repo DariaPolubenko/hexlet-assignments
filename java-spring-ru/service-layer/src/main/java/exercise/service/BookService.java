@@ -35,9 +35,6 @@ public class BookService {
     }
 
     public BookDTO create(BookCreateDTO data) {
-        //var author = authorRepository.findById(data.getAuthorId())
-                //.orElseThrow(() -> new BadRequest("Not found"));
-
         var book = bookMapper.map(data);
         bookRepository.save(book);
         return bookMapper.map(book);
