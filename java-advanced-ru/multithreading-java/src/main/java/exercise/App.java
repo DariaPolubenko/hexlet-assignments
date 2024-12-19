@@ -20,11 +20,15 @@ class App {
         MinThread thread1 = new MinThread(numbers);
 
         thread.start();
+        LOGGER.log(Level.INFO, "Thread " + thread.getName() + " started");
         thread1.start();
+        LOGGER.log(Level.INFO, "Thread " + thread1.getName() + " started");
 
         try {
             thread.join();
+            LOGGER.log(Level.INFO, "Thread " + thread.getName() + " finished");
             thread1.join();
+            LOGGER.log(Level.INFO, "Thread " + thread1.getName() + " finished");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
