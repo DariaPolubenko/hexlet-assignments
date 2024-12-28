@@ -14,31 +14,29 @@ class App {
     public static CompletableFuture<String> unionFiles(String file1, String file2, String file3) {
 
         CompletableFuture<String> futureFile1 = CompletableFuture.supplyAsync(() -> {
-            var fullPath = Paths.get(file1).toAbsolutePath().normalize();
+            var fullPath = getFullPath(file1);
+            var content = "";
             try {
-                if (!Files.exists(fullPath)) {
-                    throw new IOException("Такого пути не существует " + fullPath);
-                }
-                return Files.readString(fullPath);
+                content = Files.readString(fullPath);
             } catch (Exception e) {
-                throw new IllegalStateException("Ошибка при чтении файла: " + e.getMessage());
+                throw new RuntimeException("Ошибка при чтении файла: " + e.getMessage());
             }
+            return content;
         });
 
         CompletableFuture<String> futureFile2 = CompletableFuture.supplyAsync(() -> {
-            var fullPath = Paths.get(file2).toAbsolutePath().normalize();
+            var fullPath = getFullPath(file2);
+            var content = "";
             try {
-                if (!Files.exists(fullPath)) {
-                    throw new IOException("Такого пути не существует " + fullPath);
-                }
-                return Files.readString(fullPath);
+                content = Files.readString(fullPath);
             } catch (Exception e) {
-                throw new IllegalStateException("Ошибка при чтении файла: " + e.getMessage());
+                throw new RuntimeException("Ошибка при чтении файла: " + e.getMessage());
             }
+            return content;
         });
 
         CompletableFuture<String> writeInputFile = futureFile1.thenCombine(futureFile2, (text1, text2) -> {
-            var fullPath = Paths.get(file3).toAbsolutePath().normalize();
+            var fullPath = getFullPath(file3);
             var result = text1 + text2;
             try {
                 if (!Files.exists(fullPath)) {
@@ -46,21 +44,25 @@ class App {
                 }
                 Files.writeString(fullPath, result);
             } catch (Exception e) {
-                throw new IllegalStateException("Ошибка при записи файла: " + e.getMessage());
+                throw new RuntimeException("Ошибка при записи файла: " + e.getMessage());
             }
-            return result;
+            return "Запись успешно завершена!";
         }).exceptionally(ex -> {
-            System.out.println("NoSuchFileException");
+            System.out.println("Ошибка: ");
             return null;
         });
         return writeInputFile;
     }
     // END
 
+    public static Path getFullPath(String filePath) {
+        return Paths.get(filePath).toAbsolutePath().normalize();
+    }
 
     public static void main(String[] args) {
         // BEGIN
-        CompletableFuture<String> result = unionFiles("src/main/resources/file1.txt",
+        CompletableFuture<String> result = unionFiles(
+                "src/main/resources/file1.txt",
                 "src/main/resources/file2.txt",
                 "src/main/resources/input.txt");
         System.out.println("t");
