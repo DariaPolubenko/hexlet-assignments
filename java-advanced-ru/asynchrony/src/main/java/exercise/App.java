@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.concurrent.CompletableFuture;
 import java.nio.file.Path;
 import java.nio.file.Files;
+import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.Files.newBufferedReader;
 
@@ -59,14 +60,13 @@ class App {
         return Paths.get(filePath).toAbsolutePath().normalize();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         // BEGIN
         CompletableFuture<String> result = unionFiles(
                 "src/main/resources/file1.txt",
                 "src/main/resources/file2.txt",
                 "src/main/resources/input.txt");
-        System.out.println("t");
-        System.out.println(result);
+        System.out.println(result.get());
         // END
     }
 }
