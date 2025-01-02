@@ -18,5 +18,6 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 WORKDIR /app
 COPY ./app .
 CMD ["gradle", "bootRun"]
+EXPOSE 3000
 
 
