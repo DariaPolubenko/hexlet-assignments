@@ -1,4 +1,5 @@
 FROM eclipse-temurin:20-jdk
+
 ARG GRADLE_VERSION=8.2
 
 RUN apt-get update && apt-get install -yq make unzip
@@ -14,9 +15,8 @@ RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
 ENV PATH=$PATH:$GRADLE_HOME/bin
 
 
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} docker.jar
-EXPOSE 3000
-CMD java -jar docker.jar
+WORKDIR /app
+COPY ./app .
+CMD ["gradle", "bootRun"]
 
 
